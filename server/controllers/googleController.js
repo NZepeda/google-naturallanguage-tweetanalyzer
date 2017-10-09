@@ -3,6 +3,7 @@ const googleapi = require("googleapis");
 const language = Language();
 const mongoose = require("mongoose");
 const TweetSentiment = require("../models/TweetSentiment");
+const _ = require("lodash");
 
 exports.processTweet = function(text) {
   const document = {
@@ -39,6 +40,27 @@ exports.authenticate = function() {
       }
     }
   });
+};
+
+exports.calculateSentimentRange = function(averageSentimentScore) {
+  console.log("Sentiment score: ", averageSentimentScore);
+  // Sentiments between -1 and -0.25 are negative
+  if (_.inRange(averageSentimentScore, -1.01, -0.25)) {
+    return "negative";
+  }
+
+  // Sentiments between -.24 and 0.25 are average
+  if (_.inRange(averageSentimentScore, -0.2499, 0.25)) {
+    return "average";
+  }
+
+  // Sentiments greater than .2501 but less than 1 are positive
+  if (_.inRange(averageSentimentScore, 0.2501, 1.01)) {
+    return "positive";
+  }
+
+  // Anything that is not within the range is unknown
+  return "unknown";
 };
 
 function storeTweetSentiment(tweet, sentiment) {

@@ -1,6 +1,10 @@
 const Twitter = require("twitter");
 const googleController = require("./googleController");
 const env = require("dotenv").config();
+const mongoose = require("mongoose");
+const TweetSentiment = require("../models/TweetSentiment");
+const DailySentiment = require("../models/DailySentiment");
+const _ = require("lodash");
 
 const twitterClient = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -26,6 +30,57 @@ exports.instantiateStream = function() {
     }
   );
 };
+
+exports.analyzeDailyTweets = function() {
+  TweetSentiment.findTweetsFromPreviousDay(function(err, tweets) {
+    let average = _.meanBy(tweets, "tweetSentimentScore");
+    let sentiment = googleController.calculateSentimentRange(average);
+
+    const newDailySentiment = storeDailyTweetResults(
+      average,
+      sentiment,
+      _.size(tweets)
+    );
+    createNewTweet(newDailySentiment);
+  });
+};
+
+function createNewTweet(newDailySentiment) {
+  const newTweet =
+    "Today Trump tweeted " +
+    newDailySentiment.timesTweeted +
+    " times today and his overall mood was " +
+    newDailySentiment.overallMood +
+    ".";
+  console.log(tweet);
+  twitterClient.post("statuses/update", { status: newTweet }, function(
+    error,
+    tweet,
+    response
+  ) {
+    if (!error) {
+      console.log(tweet);
+    }
+  });
+}
+
+function storeDailyTweetResults(average, sentiment, numTweets) {
+  const newDailySentiment = new DailySentiment({
+    dailySentimentScore: average,
+    overallMood: sentiment,
+    timesTweeted: numTweets
+  });
+
+  newDailySentiment.save(function(error) {
+    if (error) {
+      console.log("ERROR: ", error.message);
+    } else {
+      console.log("Stored new daily sentiment average");
+    }
+  });
+
+  return newDailySentiment;
+}
 
 function tweetIsRetweeted(tweet) {
   if (tweet.includes("RT")) {
