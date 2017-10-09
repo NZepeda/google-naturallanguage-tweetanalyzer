@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "trump-tweets-mood",
+  "private_key_id": "9e68a9314bd932bed5c0e6139c0a0623f718754a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC16PQFDM2PztLN\nepL+IarqIxYL2hapt7GMLH97ULB36kTEz+iQQPjz2Sn5qA8cuaMQ5XkcD2AHQonP\nhCx0jiZtTvrQlangYOLER/Q0XV+D+wQaiEmvqOMWf6UEUSBNLvGcXDSoLbw8bd6n\nqo7Yg68CBJnUNSmyIvg3qEhQFyUX4KQl7lUvQX+Hhh8hSK3YLyDVXFF0O+ada+eX\nDTJfMzAp9xYDPHDCJ3DtZS/bQ9JVLJTdn7TKOZPxulFqII6mZc1/aKgdVTUMQ5cJ\nN06kFEAyFXqKpPJs8ZVxkNu16+GB0cJSLiKayooggtj4OWbckrNZryjyr8gX1d25\n88pUphd7AgMBAAECggEANXJ6C+fMl+WtMzlB6hALTxq69gWAZiI2NNi4Jgu5pan7\nxZXOn1+vpbnXJua1dfunCSZbFJ8B2HA43HNZum8vpCsx70oh7O6aghAgFKigkT8V\n4BPODqIBAtHDMscBRhw2WfoPcKBrb5fadQncSYo7R80BQ4PROekjY/r6MCn0uJRF\nwyd9409m2dwpxpNX3uTb4zUxAwAW+dS2wv57ao4ntsgvcFDygKojmrvkOSJIrSzf\n67Mb1eh9eI47QsGlghPZS+zQ2mUxwskdlK16pT1pI/n4VtAgnohtFXXgaBtMyFHR\nnTPdR95Qs8KXTkWc44rtTXcBWtob1Ley3W2prqI1QQKBgQDiMebvWgRVf0AJ0Q5z\nVrkBda9taKDj/KSpc8KsjDt3P/Wk2mZqZ8AghAcwcjf/ExqtaUko5CtmsH2yBAYh\nkCUCMb3+W9kFzewZy9dgYwvwhZwsbUaqPjwAL86vxPFYcc7mKNuZIPOYwRSYN8Qd\nqyhyGHWy6ov1HUQuQ2v2wf59wQKBgQDN4TaWZS3R2bOXcNMxmgOYtXJFSdFR/IK2\ngdPyW0XQILjebig8e1plAByKcrYkYKJdgWt8SJfGI5K8di9E3er4eBvwSgKDoGSv\nqdVwpcRnBxjaYq6EgYXMsrgaPvvW+304dFAGRafl3XL8K/67rhV0lny6oPVsKId3\nmJyXdL4cOwKBgHcdcE97R+z+JesFfGagtKxgHRGwl4l38f6KR2o2LtqNg/5cRLKk\nEDkPTfnlLDfXB6VqXGx8O57IMmkcVV43WkXdi//2vkKgPkUXY0QO5Kq0sZlzslLU\nkyRGCMHnJHE+/YWW3o21HJLEmuPN+ijliVcMKm8dtLZPwyfZuXEol6wBAoGAWj2b\nJbTXrqHT3E9x4s31QZxWqBRBEcSyrridZB+prB6LqcNzE3+mEZtI5058k9lfkcjG\nikVvcUPqb30GHxN+iMZsyJhIHdXSDEVO7v9Z5SbxN9gFUsNLGHxFwgtVa9fz/SjO\nYtFpVJIKcon+L9mQQfgsV8lxiaUCK+PSz3g2VD0CgYEAr/I4jjxxQGeTALrnf6+c\ns7ijrcRm+4Ehi6h71JmuEhoSxtzLfSJwBxvBmuutHRor6VeO1dJLsRoSAt/nRI5v\ntmO+qOzD/Y2hDBNObNesQswepwSXPMuVS4/6qcxLCBHmeOHI399Cn72hTXXDXpdq\nSiXeJsC2b0TYmU65pzT5y6o=\n-----END PRIVATE KEY-----\n",
+  "client_email": "trump-mood@trump-tweets-mood.iam.gserviceaccount.com",
+  "client_id": "107487767452973890274",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/trump-mood%40trump-tweets-mood.iam.gserviceaccount.com"
+}
