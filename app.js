@@ -19,6 +19,12 @@ mongoose.connect(process.env.DATABASE, {
   useMongoClient: true
 });
 
+var db = mongoose.connection;
+
+db.on("error", function(error) {
+  throw new Error("Unable to connect to the database");
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(routes);
