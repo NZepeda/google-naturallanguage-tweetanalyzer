@@ -1,9 +1,11 @@
 {
   "name": "trump-mood-tweets",
   "version": "0.0.1",
-  "description": "Node server reads Trump's tweets, uses Google cognative services to determine his mood",
+  "description":
+    "Node server reads Trump's tweets, uses Google cognative services to determine his mood",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nestor Zepeda",
@@ -16,5 +18,9 @@
     "mongoose": "^4.12.0",
     "node-schedule": "^1.2.5",
     "twitter": "^1.7.1"
+  },
+  "engines": {
+    "node": "6.11.0",
+    "npm": "2.14.12"
   }
 }
