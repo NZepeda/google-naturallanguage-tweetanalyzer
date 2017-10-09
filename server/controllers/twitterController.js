@@ -52,14 +52,14 @@ function createNewTweet(newDailySentiment) {
     " times today and his overall mood was " +
     newDailySentiment.overallMood +
     ".";
-  console.log(tweet);
+
   twitterClient.post("statuses/update", { status: newTweet }, function(
     error,
     tweet,
     response
   ) {
     if (!error) {
-      console.log(tweet);
+      console.log("Succesfully created a new tweet: " + tweet.text);
     }
   });
 }
