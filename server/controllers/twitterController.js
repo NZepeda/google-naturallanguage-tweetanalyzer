@@ -15,7 +15,6 @@ exports.instantiateStream = function() {
     { follow: process.env.TWITTER_WATCHER_ID },
     function(stream) {
       stream.on("data", function(tweet) {
-        console.log(tweet);
         if (!tweetIsRetweeted(tweet.text) && tweeterIsFollowedTweeter(tweet)) {
           googleController.processTweet(tweet.text);
         }
