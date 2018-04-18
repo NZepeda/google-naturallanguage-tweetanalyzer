@@ -15,7 +15,7 @@ var app = express();
 var port = process.env.PORT || 8000;
 
 googleController.authenticate();
-twitterController.instantiateStream();
+twitterController.getUserTweets();
 
 mongoose.connect(process.env.DATABASE, {
   useMongoClient: true

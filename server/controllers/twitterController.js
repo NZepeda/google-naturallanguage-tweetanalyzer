@@ -13,26 +13,33 @@ const twitterClient = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-exports.instantiateStream = function() {
-  twitterClient.stream(
-    "statuses/filter",
-    { follow: process.env.TWITTER_WATCHER_ID },
-    function(stream) {
-      stream.on("data", function(tweet) {
+exports.instantiateStream = () => {
+  twitterClient.stream("statuses/filter", { follow: process.env.TWITTER_WATCHER_ID }, (stream) => {
+      stream.on("data", (tweet) => {
         if (!tweetIsRetweeted(tweet.text) && tweeterIsFollowedTweeter(tweet)) {
           googleController.processTweet(tweet.text);
         }
       });
 
-      stream.on("error", function(error) {
+      stream.on("error", (error) => {
         console.log(error);
       });
     }
   );
 };
 
-exports.analyzeDailyTweets = function() {
-  TweetSentiment.findTweetsFromPreviousDay(function(err, tweets) {
+exports.getUserTweets = () => {
+
+  twitterClient.get('statuses/user_timeline', {screen_name: 'elonmusk'}, (err, results) => {
+
+    let tweets = results.map(tweet => tweet.text)
+    googleController.analyzeTweetSentiments(tweets)
+
+  });
+}
+
+exports.analyzeDailyTweets = () => {
+  TweetSentiment.findTweetsFromPreviousDay((err, tweets) => {
     let average = _.meanBy(tweets, "tweetSentimentScore");
     let sentiment = googleController.calculateSentimentRange(average);
 
@@ -53,11 +60,7 @@ function createNewTweet(newDailySentiment) {
     newDailySentiment.overallMood +
     ".";
 
-  twitterClient.post("statuses/update", { status: newTweet }, function(
-    error,
-    tweet,
-    response
-  ) {
+  twitterClient.post("statuses/update", { status: newTweet }, ( error, tweet, response) => {
     if (!error) {
       console.log("Succesfully created a new tweet: " + tweet.text);
     }

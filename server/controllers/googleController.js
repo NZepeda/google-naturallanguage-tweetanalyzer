@@ -11,29 +11,40 @@ exports.processTweet = function(text) {
     type: "PLAIN_TEXT"
   };
 
-  language
-    .analyzeSentiment({
-      document: document,
-      text: text
-    })
-    .then(function(results) {
+  language.analyzeSentiment({document: document, txt: text})
+    .then((results) => {
       const sentiment = results[0].documentSentiment;
       storeTweetSentiment(text, sentiment);
     })
-    .catch(function(err) {
+    .catch((err) => {
       console.log("ERROR: ", err);
     });
 };
 
-exports.authenticate = function() {
-  googleapi.auth.getApplicationDefault(function(err, authClient) {
+exports.analyzeTweetSentiments = (tweets) =>{
+
+  for(i in tweets){
+    const document = {
+      content: tweets[i],
+      type: 'PLAIN_TEXT'
+    }
+
+    language.analyzeSentiment({document: document, txt: tweets[i]}).then((results)=>{
+      const sentiment = results[0].documentSentiment;
+      console.log(sentiment)
+    }).catch((err) => {
+      console.log("Error: " + err.message)
+    });
+  }
+}
+
+exports.authenticate = () => {
+  googleapi.auth.getApplicationDefault((err, authClient) => {
     if (err) {
       console.log("ERROR:", err);
     } else {
-      if (
-        authClient.createScopedRequired &&
-        authClient.createScopedRequired()
-      ) {
+      if (authClient.createScopedRequired &&authClient.createScopedRequired()) {
+
         authClient = authClient.createScoped([
           "https://www.googleapis.com/auth/cloud-language"
         ]);
@@ -70,7 +81,7 @@ function storeTweetSentiment(tweet, sentiment) {
     tweetSentimentMagnitude: sentiment.magnitude
   });
 
-  newSentiment.save(function(error) {
+  newSentiment.save((error) => {
     if (error) {
       console.log("ERROR: ", error.message);
     } else {
