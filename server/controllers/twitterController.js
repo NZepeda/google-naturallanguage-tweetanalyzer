@@ -30,7 +30,7 @@ exports.instantiateStream = () => {
 
 exports.getUserTweets = () => {
 
-  twitterClient.get('statuses/user_timeline', {screen_name: 'elonmusk'}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: 'elonmusk', count: 100}, (err, results) => {
 
     let tweets = results.map(tweet => tweet.text)
     googleController.analyzeTweetSentiments(tweets)
