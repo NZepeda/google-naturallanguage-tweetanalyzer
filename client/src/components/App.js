@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField' 
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 import {Grid, Row, Col} from 'react-bootstrap'
 import logo from '../logo.svg';
 import './App.css'
@@ -14,10 +15,10 @@ class App extends Component {
     }
 
     this.onChange = this.onChange.bind(this)
+    this.onClick = this.onClick.bind(this)
   }
 
   onChange(event){
-    console.log(event)
     if(event.target.value !== "" && !event.target.value.includes('@')){
       const newText = '@' + event.target.value
       this.setState({text: newText})
@@ -28,18 +29,27 @@ class App extends Component {
 
   }
 
+  onClick(event){
+    console.log("I'm clicked!")
+  }
+
   render() {
     return (
-      <Grid className='App'>
+      <Grid className='App' fluid={true}>
         <Row>
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Twitter Sentiment Analyzer</h1>
           </header>
         </Row>
+        <Row style={{marginTop: '20px'}}>
+          <Col sm={8} md={8} mdOffset={2} smOffset={2}>
+            <TextField id='twitter-handle-field' placeholder='@YourTwitterHandle' style={{fontSize: '2em', padding: '10px', width:'100%'}} value={this.state.text} onChange={this.onChange}></TextField>
+          </Col>
+        </Row>
         <Row>
-          <Col sm={12} md={8} mdOffset={2}>
-            <TextField id='twitter-handle-field' placeholder='@YourTwitterHandle' fullWidth={true} style={{fontSize: '2em', padding: '10px'}} value={this.state.text} onChange={this.onChange}></TextField>
+          <Col md={4} mdOffset={4}>
+            <RaisedButton primary={true} label='Analyze' fullWidth={true} onClick={this.onClick}/>
           </Col>
         </Row>
       </Grid>
