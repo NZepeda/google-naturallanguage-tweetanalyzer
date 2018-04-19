@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import * as actions from '../actions/index';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
@@ -34,6 +35,7 @@ class App extends Component {
 
   onClick(event){
     this.setState({text: this.state.text, loading: true})
+    this.props.analyzeTweets(this.state.text);
   }
 
   render() {
@@ -65,4 +67,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(null, actions)(App);
