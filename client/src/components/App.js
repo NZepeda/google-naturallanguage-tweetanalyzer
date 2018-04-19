@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import {Grid, Row, Col} from 'react-bootstrap'
 import logo from '../logo.svg';
 import './App.css'
@@ -11,7 +13,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      text: ""
+      text: "",
+      loading: false
     }
 
     this.onChange = this.onChange.bind(this)
@@ -30,7 +33,7 @@ class App extends Component {
   }
 
   onClick(event){
-    console.log("I'm clicked!")
+    this.setState({text: this.state.text, loading: true})
   }
 
   render() {
@@ -52,9 +55,14 @@ class App extends Component {
             <RaisedButton primary={true} label='Analyze' fullWidth={true} onClick={this.onClick}/>
           </Col>
         </Row>
+        <Row style={{marginTop: '20px'}}>
+          <Col sm={12} md={12}>
+            {this.state.loading ? <FontAwesomeIcon icon="spinner" size='3x' spin/> : null} 
+          </Col>
+        </Row>
       </Grid>
     );
   }
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
