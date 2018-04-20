@@ -1,10 +1,18 @@
-export default function(state = null, action){
+export default function(state = {loading: false}, action){
+    console.log("In the reducer!")
     switch(action.type){
         case 'ANALYZE_TWEET': 
-            if(action.payload){
-                return action.payload;
+            return {
+                ...state,
+                loading: true
             }
-            return false;
+        case 'RECEIVE_ANALYSIS': 
+            if(action.payload){
+                return {
+                    payload: action.payload,
+                    loading: false
+                }
+            }
         default: 
             return state;
     }

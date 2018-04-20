@@ -14,8 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      text: "",
-      loading: false
+      text: ""
     }
 
     this.onChange = this.onChange.bind(this)
@@ -34,7 +33,7 @@ class App extends Component {
   }
 
   onClick(event){
-    this.setState({text: this.state.text, loading: true})
+    this.setState({text: this.state.text})
     this.props.analyzeTweets(this.state.text);
   }
 
@@ -59,12 +58,14 @@ class App extends Component {
         </Row>
         <Row style={{marginTop: '20px'}}>
           <Col sm={12} md={12}>
-            {this.state.loading ? <FontAwesomeIcon icon="spinner" size='3x' spin/> : null} 
+            {this.props.loading ? <FontAwesomeIcon icon="spinner" size='3x' spin/> : null} 
           </Col>
         </Row>
       </Grid>
     );
   }
 }
-
-export default connect(null, actions)(App);
+function mapStateToProps(state){
+  return {loading: state.sentiment.loading}
+}
+export default connect(mapStateToProps, actions)(App);
