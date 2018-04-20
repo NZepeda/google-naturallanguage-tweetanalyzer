@@ -13,6 +13,7 @@ export default function(state = {loading: false}, action){
                     loading: false
                 }
             }
+        break;
         default: 
             return state;
     }

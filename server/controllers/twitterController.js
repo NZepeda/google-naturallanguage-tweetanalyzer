@@ -28,77 +28,22 @@ exports.instantiateStream = () => {
   );
 };
 
-exports.getUserTweets = () => {
+exports.getUserTweets = async (req, res) => {
+  let handle = req.query.handle.replace('@', '');
 
-  twitterClient.get('statuses/user_timeline', {screen_name: 'elonmusk', count: 100}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 3}, (err, results) => {
+    if(err){
+      res.status(500).send({error: err.message, data: null})
+    }
+    else{
+      let tweets = results.map(tweet => tweet.text)
 
-    let tweets = results.map(tweet => tweet.text)
-    googleController.analyzeTweetSentiments(tweets)
-
-  });
-}
-
-exports.analyzeDailyTweets = () => {
-  TweetSentiment.findTweetsFromPreviousDay((err, tweets) => {
-    let average = _.meanBy(tweets, "tweetSentimentScore");
-    let sentiment = googleController.calculateSentimentRange(average);
-
-    const newDailySentiment = storeDailyTweetResults(
-      average,
-      sentiment,
-      _.size(tweets)
-    );
-    createNewTweet(newDailySentiment);
-  });
-};
-
-function createNewTweet(newDailySentiment) {
-  const newTweet =
-    "Today Trump tweeted " +
-    newDailySentiment.timesTweeted +
-    " times today and his overall mood was " +
-    newDailySentiment.overallMood +
-    ".";
-
-  twitterClient.post("statuses/update", { status: newTweet }, ( error, tweet, response) => {
-    if (!error) {
-      console.log("Succesfully created a new tweet: " + tweet.text);
+      googleController.analyzeTweetSentiments(tweets).then(response => {
+        res.status(200).send({error: null, data: response});
+      }).catch(err => {
+        res.status(500).send({error: err.message, data: null});
+      });
     }
   });
 }
 
-function storeDailyTweetResults(average, sentiment, numTweets) {
-  const newDailySentiment = new DailySentiment({
-    dailySentimentScore: average,
-    overallMood: sentiment,
-    timesTweeted: numTweets
-  });
-
-  newDailySentiment.save(function(error) {
-    if (error) {
-      console.log("ERROR: ", error.message);
-    } else {
-      console.log("Stored new daily sentiment average");
-    }
-  });
-
-  return newDailySentiment;
-}
-
-function tweetIsRetweeted(tweet) {
-  if (tweet.includes("RT")) {
-    return true;
-  }
-
-  return false;
-}
-
-function tweeterIsFollowedTweeter(tweet) {
-  const userId = parseInt(tweet.user.id);
-  const envUserId = parseInt(process.env.TWITTER_WATCHER_ID);
-
-  if (userId == envUserId) {
-    return true;
-  }
-  return false;
-}

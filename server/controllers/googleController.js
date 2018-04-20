@@ -21,21 +21,11 @@ exports.processTweet = function(text) {
     });
 };
 
-exports.analyzeTweetSentiments = (tweets) =>{
+exports.analyzeTweetSentiments = async (tweets) =>{
+  const promises = tweets.map(t => language.analyzeSentiment({document: {content: t, type: 'PLAIN_TEXT'}, txt: t}));
 
-  for(i in tweets){
-    const document = {
-      content: tweets[i],
-      type: 'PLAIN_TEXT'
-    }
-
-    language.analyzeSentiment({document: document, txt: tweets[i]}).then((results)=>{
-      const sentiment = results[0].documentSentiment;
-      console.log(sentiment)
-    }).catch((err) => {
-      console.log("Error: " + err.message)
-    });
-  }
+  const sentiments = await Promise.all(promises);
+  return sentiments;
 }
 
 exports.authenticate = () => {
@@ -43,7 +33,7 @@ exports.authenticate = () => {
     if (err) {
       console.log("ERROR:", err);
     } else {
-      if (authClient.createScopedRequired &&authClient.createScopedRequired()) {
+      if (authClient.createScopedRequired && authClient.createScopedRequired()) {
 
         authClient = authClient.createScoped([
           "https://www.googleapis.com/auth/cloud-language"
