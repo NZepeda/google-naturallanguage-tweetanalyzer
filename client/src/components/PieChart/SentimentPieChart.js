@@ -1,21 +1,33 @@
 import React, {Component} from 'react';
 import {PieChart, Pie, Cell, Label} from 'recharts';
+import './SentimentPieChart.css';
 
 class SentimentPieChart extends Component {
     constructor(props){
         super(props);
-
+        console.log(this.props.data);
         this.colors = ['#4CAF50', '#B71C1C', '#FFBB28', '#757575'];
         this.data = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
         {name: 'Group C', value: 300}, {name: 'Group D', value: 200}];
     }
 
+    constructArrayForDictionary(dictionary){
+        let dictionaryArray = [];
+        for(const [key, value] of Object.entries(dictionary)){
+            dictionaryArray.push({
+                name: key,
+                value: value
+            });
+        }
+        return dictionaryArray;
+    }
+
     render(){
         return (
-            <PieChart width={1000} height={700}>
+            <PieChart width={700} height={500} style={{align: 'center'}}>
                 <Pie
                     dataKey="value"
-                    data={this.data}
+                    data={this.constructArrayForDictionary(this.props.data)}
                     labelLine = {false}
                     label={renderCustomizedLabel}
                     outerRadius={200}
@@ -28,7 +40,7 @@ class SentimentPieChart extends Component {
     }
 }
 
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index  }) => {
 
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;

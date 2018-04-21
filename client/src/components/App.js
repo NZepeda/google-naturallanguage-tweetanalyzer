@@ -66,7 +66,7 @@ class App extends Component {
         <Row style={{marginTop: '20px'}}>
           <Col sm={12} md={12}>
             {this.props.loading ? <FontAwesomeIcon icon="spinner" size='3x' spin/> : null} 
-            {this.props.data ? <OverallCard twitterHandle={this.state.text} overallMood={this.props.data.overallMood}/> : null }
+            {this.props.data ? <OverallCard twitterHandle={this.state.text} overallMood={this.props.data.overallMood} buckets={this.props.data.buckets}/> : null }
           </Col>
         </Row>
       </Grid>

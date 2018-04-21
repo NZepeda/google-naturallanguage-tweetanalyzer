@@ -31,7 +31,7 @@ exports.instantiateStream = () => {
 exports.getUserTweets = async (req, res) => {
   let handle = req.query.handle.replace('@', '');
 
-  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 10}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 100}, (err, results) => {
     if(err){
       res.status(500).send({error: err.message, data: null})
     }
@@ -74,12 +74,12 @@ const getMoodBuckets = (sentiments) => {
   }
 
   sentiments.forEach(sentiment => {
-    let sentimentScore = parseInt(sentiment[0].documentSentiment.score);
+    let sentimentScore = sentiment[0].documentSentiment.score;
 
-    if(sentimentScore >= 0.25){
+    if(sentimentScore >= 0.15){
       buckets['positive'] += 1
     }
-    else if(sentimentScore > -0.25 && sentimentScore < 0.25){
+    else if(sentimentScore > -0.25 && sentimentScore < 0.15){
       buckets['normal'] += 1
     }
     else if(sentimentScore <= -0.25){

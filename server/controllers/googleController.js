@@ -51,12 +51,12 @@ exports.calculateSentimentRange = function(averageSentimentScore) {
   }
 
   // Sentiments between -.24 and 0.25 are average
-  if (_.inRange(averageSentimentScore, -0.2499, 0.25)) {
+  if (_.inRange(averageSentimentScore, -0.2499, 0.15)) {
     return "Average";
   }
 
   // Sentiments greater than .2501 but less than 1 are positive
-  if (_.inRange(averageSentimentScore, 0.2501, 1.01)) {
+  if (_.inRange(averageSentimentScore, 0.1501, 1.01)) {
     return "Positive";
   }
 

@@ -15,8 +15,8 @@ class OverallCard extends Component{
                 <h2>{this.props.twitterHandle + "'s overall mood is: "}</h2>
                 <h1>{this.props.overallMood}</h1>
                 <Row>
-                    <Col sm={12} md={12}>
-                        <SentimentPieChart />
+                    <Col sm={12} md={6} mdOffset={3}>
+                        <SentimentPieChart data={this.props.buckets} />
                     </Col> 
                 </Row>
             </div>
@@ -25,7 +25,7 @@ class OverallCard extends Component{
     render(){
         return(
             <Row>
-                <Col sm={12} md={8} mdOffset={2}>
+                <Col sm={12} md={10} mdOffset={1}>
                     <Card children={this.renderContent()}>
                     </Card>
                 </Col>
