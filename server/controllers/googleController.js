@@ -47,17 +47,17 @@ exports.calculateSentimentRange = function(averageSentimentScore) {
   console.log("Sentiment score: ", averageSentimentScore);
   // Sentiments between -1 and -0.25 are negative
   if (_.inRange(averageSentimentScore, -1.01, -0.25)) {
-    return "negative";
+    return "Negative";
   }
 
   // Sentiments between -.24 and 0.25 are average
   if (_.inRange(averageSentimentScore, -0.2499, 0.25)) {
-    return "average";
+    return "Average";
   }
 
   // Sentiments greater than .2501 but less than 1 are positive
   if (_.inRange(averageSentimentScore, 0.2501, 1.01)) {
-    return "positive";
+    return "Positive";
   }
 
   // Anything that is not within the range is unknown

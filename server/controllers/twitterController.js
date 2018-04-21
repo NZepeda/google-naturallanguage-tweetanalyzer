@@ -31,7 +31,7 @@ exports.instantiateStream = () => {
 exports.getUserTweets = async (req, res) => {
   let handle = req.query.handle.replace('@', '');
 
-  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 3}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 10}, (err, results) => {
     if(err){
       res.status(500).send({error: err.message, data: null})
     }
@@ -39,7 +39,16 @@ exports.getUserTweets = async (req, res) => {
       let tweets = results.map(tweet => tweet.text)
 
       googleController.analyzeTweetSentiments(tweets).then(response => {
-        res.status(200).send({error: null, data: response});
+        let average = getAverageSentimentScore(response);
+        let mood = googleController.calculateSentimentRange(average)
+        let buckets = getMoodBuckets(response);
+        let data = {
+          sentiments: response,
+          averageScore: average,
+          overallMood: mood,
+          buckets: buckets
+        }
+        res.status(200).send({error: null, data: data});
       }).catch(err => {
         res.status(500).send({error: err.message, data: null});
       });
@@ -47,3 +56,39 @@ exports.getUserTweets = async (req, res) => {
   });
 }
 
+const getAverageSentimentScore = (sentiments) => {
+  let average = 0;
+  sentiments.forEach((sentiment) => {
+    average += sentiment[0].documentSentiment.score;
+  });
+  
+  return average / sentiments.length;
+}
+
+const getMoodBuckets = (sentiments) => {
+  let  buckets = {
+    'positive': 0,
+    'negative': 0,
+    'normal': 0,
+    'unknown': 0
+  }
+
+  sentiments.forEach(sentiment => {
+    let sentimentScore = parseInt(sentiment[0].documentSentiment.score);
+
+    if(sentimentScore >= 0.25){
+      buckets['positive'] += 1
+    }
+    else if(sentimentScore > -0.25 && sentimentScore < 0.25){
+      buckets['normal'] += 1
+    }
+    else if(sentimentScore <= -0.25){
+      buckets['negative'] += 1
+    }
+    else{
+      buckets['unknown'] += 1
+    }
+  });
+
+  return buckets;
+}
