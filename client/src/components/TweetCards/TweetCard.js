@@ -13,8 +13,8 @@ const TweetCard = (props) => {
     }
 
     return(
-        <Col className='col' sm={12} md={4} style={{marginBottom: '10px', display: 'table-cell'}}>
-            <Card>
+        <Col sm={12} md={4} style={{marginBottom: '10px'}}>
+            <Card style={{height: '100%'}}>
                 <CardHeader title={props.user.name} subtitle={'@' + props.user.handle} avatar={props.user.image} />
                 <CardText style={{fontSize: '1.1em', fontWeight:'bold'}}>
                     {props.text}

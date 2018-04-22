@@ -31,7 +31,7 @@ exports.instantiateStream = () => {
 exports.getUserTweets = async (req, res) => {
   let handle = req.query.handle.replace('@', '');
 
-  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 10}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 100}, (err, results) => {
     if(err){
       res.status(500).send({error: err.message, data: null})
     }

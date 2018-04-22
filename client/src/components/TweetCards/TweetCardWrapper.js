@@ -14,7 +14,7 @@ class TweetCardWrapper extends Component {
     }
     render(){
         return(
-            <Row className='col-container' style={{marginTop: '10px', display: 'table', width: '100%'}}>
+            <Row style={{marginTop: '10px'}}>
                 <Equalizer>
                     {this.renderContent()}
                 </Equalizer>
