@@ -31,11 +31,16 @@ exports.instantiateStream = () => {
 exports.getUserTweets = async (req, res) => {
   let handle = req.query.handle.replace('@', '');
 
-  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 100}, (err, results) => {
+  twitterClient.get('statuses/user_timeline', {screen_name: handle, count: 10}, (err, results) => {
     if(err){
       res.status(500).send({error: err.message, data: null})
     }
     else{
+      let userInfo = {
+        image: results[0].user.profile_image_url,
+        handle: results[0].user.screen_name,
+        name: results[0].user.name
+      }
       let tweets = results.map(tweet => tweet.text)
 
       googleController.analyzeTweetSentiments(tweets).then(response => {
@@ -43,6 +48,7 @@ exports.getUserTweets = async (req, res) => {
         let mood = googleController.calculateSentimentRange(average)
         let buckets = getMoodBuckets(response);
         let data = {
+          userInfo: userInfo,
           sentiments: response,
           averageScore: average,
           overallMood: mood,

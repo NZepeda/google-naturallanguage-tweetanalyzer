@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PieChart, Pie, Cell, Label} from 'recharts';
+import {PieChart, Pie, Cell, Legend} from 'recharts';
 import './SentimentPieChart.css';
 
 class SentimentPieChart extends Component {
@@ -35,6 +35,7 @@ class SentimentPieChart extends Component {
                 >
                     {this.data.map((entry, index) => <Cell key={index} fill={this.colors[index % this.colors.length]} />)}
                 </Pie>
+                <Legend vertivalAlign="top" height={40}/>
             </PieChart>
         )
     }

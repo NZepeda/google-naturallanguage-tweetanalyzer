@@ -1,0 +1,8 @@
+.card-content{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.col {
+    display: table-cell; /* Make elements inside the container behave like table cells */
+}

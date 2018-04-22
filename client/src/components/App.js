@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions/index';
 import OverallCard from './OverallCard/OverallCard';
+import TweetCardWrapper from './TweetCards/TweetCardWrapper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -47,7 +48,7 @@ class App extends Component {
             <h1 className="App-title">Twitter Sentiment Analyzer</h1>
           </header>
         </Row>
-        <Row style={{marginTop: '20px'}}>
+        <Row>
           <Col sm={8} md={8} mdOffset={2} smOffset={2}>
             <TextField 
               id='twitter-handle-field' 
@@ -63,11 +64,15 @@ class App extends Component {
             <RaisedButton primary={true} label='Analyze' fullWidth={true} onClick={this.onClick}/>
           </Col>
         </Row>
-        <Row style={{marginTop: '20px'}}>
+        <Row>
           <Col sm={12} md={12}>
             {this.props.loading ? <FontAwesomeIcon icon="spinner" size='3x' spin/> : null} 
             {this.props.data ? <OverallCard twitterHandle={this.state.text} overallMood={this.props.data.overallMood} buckets={this.props.data.buckets}/> : null }
           </Col>
+        </Row>
+
+        <Row>
+          {this.props.data ? <TweetCardWrapper tweetSentiments={this.props.data.sentiments} user={this.props.data.userInfo}/> : null }
         </Row>
       </Grid>
     );

@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'react-bootstrap';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 import SentimentPieChart from '../PieChart/SentimentPieChart';
 
 class OverallCard extends Component{
-    constructor(props){
-        super(props);
-
-        
-    }
     renderContent(){
         return (
             <div>
