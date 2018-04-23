@@ -10,7 +10,7 @@ class OverallCard extends Component{
                 <h2>{this.props.twitterHandle + "'s overall mood is: "}</h2>
                 <h1>{this.props.overallMood}</h1>
                 <Row>
-                    <Col sm={12} md={6} mdOffset={3}>
+                    <Col sm={12} md={12}>
                         <SentimentPieChart data={this.props.buckets} />
                     </Col> 
                 </Row>
