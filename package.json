@@ -1,5 +1,5 @@
 {
-  "name": "Tweet Sentiment Analyzer",
+  "name": "tweet_sentiment_analyzer",
   "version": "1.0.0",
   "description": "MERN stack application that allows user to enter their twitter handle and see their overall sentiment",
   "main": "app.js",
